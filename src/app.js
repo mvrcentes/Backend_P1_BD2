@@ -3,6 +3,8 @@ import cors from "cors"
 
 import estudiantesRoutes from "./routes/estudiantes.routes.js"
 
+import personalRoutes from "./routes/personal.routes.js"
+
 
 const app = express()
 
@@ -15,5 +17,7 @@ app.use(express.json())
 
 // Routes
 app.use('/api/estudiantes', estudiantesRoutes)
+
+app.use('/api/personal', personalRoutes)
 
 export default app
