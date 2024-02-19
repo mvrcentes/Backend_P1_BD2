@@ -27,7 +27,7 @@ estudiantesControllers.postEstudiantes = async (req, res) => {
             cursos_aprobados,
         } = req.body
 
-        const nuevoEstudiante = new Estudiante({
+        const nuevoEstudiante = new EstudiantesScheme({
             nombre,
             apellido,
             codigo_estudiante,
