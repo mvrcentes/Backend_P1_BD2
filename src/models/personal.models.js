@@ -35,3 +35,5 @@ const PersonalSchema = new Schema({
         required: true,
     },
 })
+
+export default model("Personal", PersonalSchema)
