@@ -1,8 +1,8 @@
 import mongoose from "mongoose"
-import dotenv from "dotenv"
-dotenv.config({ path: "./.env.local" })
+//import dotenv from "dotenv"
+//dotenv.config({ path: "./.env.local" })
 
-const URI = process.env.MONGODB_URI
+const URI = "mongodb+srv://ram21032:MVRCatlas1109@bd2.1meddwo.mongodb.net/Proyecto1"//process.env.MONGODB_URI
 
 mongoose.connect(URI, {
     useNewUrlParser: true
