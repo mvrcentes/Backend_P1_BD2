@@ -1,37 +1,35 @@
-import NotasScheme from '../models/notas.models.js'
-import Estudiante from '../models/estudiantes.models.js'
+import NotasScheme from "../models/notas.models.js"
+import Estudiante from "../models/estudiantes.models.js"
 import Curso from "../models/cursos.models.js"
-import mongoose from 'mongoose';
+import mongoose from "mongoose"
 
 const notasControllers = {}
 
 notasControllers.getNotasEstudiante = async (req, res) => {
     try {
-        const { codigo_estudiante } = req.params;
-        // Crear una nueva instancia de ObjectId usando 'new'
-        const codigoEstudianteObjectId = new mongoose.Types.ObjectId(codigo_estudiante);
+        const { codigo_estudiante } = req.params
 
-        // Verificar si el estudiante existe en la base de datos
         const estudianteEncontrado = await Estudiante.findOne({
-            _id: codigoEstudianteObjectId, // Usa el ObjectId convertido
-        });
+            codigo_estudiante,
+        })
 
         if (!estudianteEncontrado) {
-            return res
-                .status(400)
-                .json({
-                    error: `No se encontró al estudiante con el código ${codigo_estudiante}`,
-                });
+            return res.status(400).json({
+                error: `No se encontró al estudiante con el código ${codigo_estudiante}`,
+            })
         }
 
-        const notasEstudiante = await NotasScheme.find({ codigo_estudiante: estudianteEncontrado._id });
-        res.status(200).json(notasEstudiante);
+        console.log(estudianteEncontrado)
 
+        const notasEstudiante = await NotasScheme.find({
+            codigo_estudiante: estudianteEncontrado._id,
+        })
+        res.status(200).json(notasEstudiante)
     } catch (error) {
-        console.error("Error al obtener notas del estudiante:", error.message);
-        res.status(500).json({ error: "Error interno del servidor" });
+        console.error("Error al obtener notas del estudiante:", error.message)
+        res.status(500).json({ error: "Error interno del servidor" })
     }
-};
+}
 
 notasControllers.editNotas = async (req, res) => {
     try {
@@ -48,12 +46,15 @@ notasControllers.editNotas = async (req, res) => {
             return res.status(404).json({ error: "Curso no encontrado" })
         }
 
-        const notasEstudiante = await NotasScheme.findOne({ codigo_estudiante, codigo_curso })
+        const notasEstudiante = await NotasScheme.findOne({
+            codigo_estudiante,
+            codigo_curso,
+        })
         if (!notasEstudiante) {
             const nuevaNota = new NotasScheme({
                 codigo_estudiante,
                 codigo_curso,
-                notas
+                notas,
             })
             const notaGuardada = await nuevaNota.save()
             return res.status(201).json(notaGuardada)
@@ -70,39 +71,30 @@ notasControllers.editNotas = async (req, res) => {
 
 notasControllers.postNota = async (req, res) => {
     try {
-        const {
-            codigo_nota,
-            codigo_estudiante,
-            codigo_curso,
-            nota,
-        } = req.body
+        const { codigo_nota, codigo_estudiante, codigo_curso, nota } = req.body
 
         // Verificar si el estudiante existe en la base de datos
         const estudianteEncontrado = await Estudiante.findOne({
             codigo_estudiante,
         })
+
         if (!estudianteEncontrado) {
-            return res
-                .status(400)
-                .json({
-                    error: `No se encontró al estudiante con el código ${codigo_estudiante}`,
-                })
+            return res.status(400).json({
+                error: `No se encontró al estudiante con el código ${codigo_estudiante}`,
+            })
         }
         // Verificar si el curso existe en la base de datos
         const cursoEncontrado = await Curso.findOne({ codigo_curso })
         if (!cursoEncontrado) {
-            return res
-                .status(400)
-                .json({
-                    error: `No se encontró al curso con el código ${codigo_curso}`,
-                })
+            return res.status(400).json({
+                error: `No se encontró al curso con el código ${codigo_curso}`,
+            })
         }
-
 
         const nuevaNota = new NotasScheme({
             codigo_nota,
-            codigo_estudiante:codigo_estudiante._id,
-            codigo_curso:cursoEncontrado._id,
+            codigo_estudiante: estudianteEncontrado._id,
+            codigo_curso: cursoEncontrado._id,
             nota,
         })
 
