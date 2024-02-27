@@ -1,12 +1,12 @@
-import { Router } from "express"
+//import { Router } from "express"
+//
+//import materialCursoController from "../controllers/materialCurso.controllers.js"
+//const { getMaterialCurso, postMaterialCurso } = materialCursoController
 
-import materialCursoController from "../controllers/materialCurso.controllers.js"
-const { getMaterialCurso, postMaterialCurso } = materialCursoController
+//const router = Router()
 
-const router = Router()
+//router.route("/")
+//    .get(materialCursoController.getMaterialCurso)
+//    .post(materialCursoController.postMaterialCurso)
 
-router.route("/")
-    .get(materialCursoController.getMaterialCurso)
-    .post(materialCursoController.postMaterialCurso)
-
-export default router
+//export default router
