@@ -24,7 +24,6 @@ estudiantesControllers.postEstudiantes = async (req, res) => {
             sexo,
             contactos_de_emergencia,
             cursos_actuales,
-            cursos_aprobados,
         } = req.body
 
         const nuevoEstudiante = new EstudiantesScheme({
@@ -35,7 +34,6 @@ estudiantesControllers.postEstudiantes = async (req, res) => {
             sexo,
             contactos_de_emergencia,
             cursos_actuales,
-            cursos_aprobados,
         })
 
         const estudianteGuardado = await nuevoEstudiante.save()
