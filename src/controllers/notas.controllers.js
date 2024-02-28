@@ -34,7 +34,7 @@ notasControllers.getNotasEstudiante = async (req, res) => {
 notasControllers.editNotas = async (req, res) => {
     try {
         const { codigo_estudiante } = req.params
-        const { codigo_curso, notas } = req.body
+        const { codigo_curso, codigo_nota, nota } = req.body
 
         const estudiante = await Estudiante.findOne({ codigo_estudiante })
         if (!estudiante) {
@@ -54,13 +54,13 @@ notasControllers.editNotas = async (req, res) => {
             const nuevaNota = new NotasScheme({
                 codigo_estudiante,
                 codigo_curso,
-                notas,
+                nota,
             })
             const notaGuardada = await nuevaNota.save()
             return res.status(201).json(notaGuardada)
         }
 
-        notasEstudiante.notas = notas
+        notasEstudiante.nota = nota
         const notaGuardada = await notasEstudiante.save()
         res.status(200).json(notaGuardada)
     } catch (error) {

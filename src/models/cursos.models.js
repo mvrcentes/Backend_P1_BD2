@@ -26,8 +26,8 @@ const CursoSchema = new Schema({
         required: true,
     },
     profesor: {
-        type: Schema.Types.ObjectId,
-        ref: "Personal",
+        type: String,
+        required: true,
     },
     grado: {
         type: String,

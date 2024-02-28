@@ -6,12 +6,12 @@ const NotaSchema = new Schema({
         required: true,
     },
     codigo_estudiante: {
-        type: Schema.Types.ObjectId,
-        ref: "Estudiante",
+        type: String,
+        required: true,
     },
     codigo_curso: {
-        type: Schema.Types.ObjectId,
-        ref: "Curso",
+        type: String,
+        required: true,
     },
     nota: {
         type: Number,
