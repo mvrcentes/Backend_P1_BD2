@@ -52,7 +52,7 @@ estudiantesControllers.postEstudiantes = async (req, res) => {
     }
 }
 
-import NotasScheme from "../models/notas.models.js";
+
 estudiantesControllers.getTopEstudiantesPorCurso = async (req, res) => {
     try {
         const topEstudiantes = await EstudiantesScheme.aggregate([
@@ -77,8 +77,8 @@ estudiantesControllers.getTopEstudiantesPorCurso = async (req, res) => {
                 nota_maxima: 1
             }},
             {$sort: {
-                nombre_curso: 1,
                 nota_maxima: -1
+                
             }},
             {$limit: 10}
         ]);
