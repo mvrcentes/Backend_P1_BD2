@@ -9,4 +9,7 @@ router.route("/")
     .get(cursosController.getCursos)
     .post(cursosController.postCursos)
 
+router.route("/:codigo_curso")
+    .get(cursosController.getCurso)
+
 export default router

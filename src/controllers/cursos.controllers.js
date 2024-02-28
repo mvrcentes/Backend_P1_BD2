@@ -57,4 +57,21 @@ cursosControllers.postCursos = async (req, res) => {
     }
 }
 
+cursosControllers.getCurso = async (req, res) => {
+    try {
+        const { codigo_curso } = req.params;
+
+        const curso = await CursosScheme.findById(codigo_curso);
+
+        if (!curso) {
+            return res.status(404).json({ error: `No se encontró el curso con el código ${codigo_curso}` });
+        }
+
+        res.status(200).json(curso);
+    } catch (error) {
+        console.error("Error al obtener curso:", error.message);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+}
+
 export default cursosControllers
