@@ -31,6 +31,13 @@ materialCursoControllers.postMaterialCurso = async (req, res) => {
         } else {
             const { codigo_material, codigo_curso, nombre_material, archivo, tipo_material } = materialCursoData;
 
+            // Check if material with the same code already exists
+            const existingMaterial = await materialCursoScheme.findOne({ codigo_material });
+
+            if (existingMaterial) {
+                return res.status(400).json({ error: 'Material with the same code already exists' });
+            }
+
             const nuevoMaterialCurso = new materialCursoScheme({
                 codigo_material,
                 codigo_curso,
