@@ -14,27 +14,39 @@ materialCursoControllers.getMaterialCurso = async (req, res) => {
 
 materialCursoControllers.postMaterialCurso = async (req, res) => {
     try {
-        const {
-            codigo_material, 
-            codigo_curso,
-            nombre_material,
-            archivo,
-        } = req.body;
+        const materialCursoData = req.body;
 
-        const nuevoMaterialCurso = new materialCursoScheme({
-            codigo_material,
-            codigo_curso,
-            nombre_material,
-            archivo,
-        });
+        if (Array.isArray(materialCursoData)) {
+            const materialCursoDocuments = materialCursoData.map(({ codigo_material, codigo_curso, nombre_material, archivo, tipo_material }) => ({
+                codigo_material,
+                codigo_curso,
+                nombre_material,
+                archivo,
+                tipo_material,
+            }));
 
-        const materialCursoGuardado = await nuevoMaterialCurso.save();
+            const insertedMaterialCursos = await materialCursoScheme.insertMany(materialCursoDocuments);
 
-        res.status(201).json(materialCursoGuardado);
+            res.status(201).json(insertedMaterialCursos);
+        } else {
+            const { codigo_material, codigo_curso, nombre_material, archivo, tipo_material } = materialCursoData;
+
+            const nuevoMaterialCurso = new materialCursoScheme({
+                codigo_material,
+                codigo_curso,
+                nombre_material,
+                archivo,
+                tipo_material,
+            });
+
+            const materialCursoGuardado = await nuevoMaterialCurso.save();
+
+            res.status(201).json(materialCursoGuardado);
+        }
     } catch (error) {
         console.error('Error al crear materialCurso:', error.message);
         res.status(500).json({ error: 'Error interno del servidor' });
     }
-}
+};
 
 export default materialCursoControllers;
