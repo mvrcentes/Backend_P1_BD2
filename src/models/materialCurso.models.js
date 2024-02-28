@@ -6,8 +6,8 @@ const MaterialCursoSchema = new Schema({
         required: true,
     },
     codigo_curso: {
-        type: String,
-        required: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Curso',
     },
     nombre_material: {
         type: String,
