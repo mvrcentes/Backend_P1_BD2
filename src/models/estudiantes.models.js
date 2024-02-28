@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose"
+import { Schema, model } from "mongoose";
 
 const EstudianteSchema = new Schema({
     nombre: {
@@ -32,16 +32,12 @@ const EstudianteSchema = new Schema({
     ],
     cursos_actuales: [
         {
-            type: Schema.Types.ObjectId,
-            ref: "Curso",
+            codigo_curso: {
+                type: String,
+                required: true,
+            },
         },
     ],
-    cursos_aprobados: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: "Curso",
-        },
-    ],
-})
+});
 
-export default model("Estudiante", EstudianteSchema)
+export default model("Estudiante", EstudianteSchema);
