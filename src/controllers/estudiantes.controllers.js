@@ -26,6 +26,13 @@ estudiantesControllers.postEstudiantes = async (req, res) => {
             cursos_actuales,
         } = req.body
 
+        // Check if a student with the same codigo_estudiante already exists
+        const existingStudent = await EstudiantesScheme.findOne({ codigo_estudiante })
+
+        if (existingStudent) {
+            return res.status(400).json({ error: "El código de estudiante ya está en uso" })
+        }
+
         const nuevoEstudiante = new EstudiantesScheme({
             nombre,
             apellido,

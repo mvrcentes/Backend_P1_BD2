@@ -22,7 +22,7 @@ notasControllers.getNotasEstudiante = async (req, res) => {
         console.log(estudianteEncontrado)
 
         const notasEstudiante = await NotasScheme.find({
-            codigo_estudiante: estudianteEncontrado._id,
+            codigo_estudiante: codigo_estudiante,
         })
         res.status(200).json(notasEstudiante)
     } catch (error) {
@@ -36,22 +36,13 @@ notasControllers.editNotas = async (req, res) => {
         const { codigo_estudiante } = req.params
         const { codigo_curso, codigo_nota, nota } = req.body
 
-        const estudiante = await Estudiante.findOne({ codigo_estudiante })
-        if (!estudiante) {
-            return res.status(404).json({ error: "Estudiante no encontrado" })
-        }
-
-        const curso = await Curso.findOne({ codigo_curso })
-        if (!curso) {
-            return res.status(404).json({ error: "Curso no encontrado" })
-        }
-
         const notasEstudiante = await NotasScheme.findOne({
             codigo_estudiante,
             codigo_curso,
         })
         if (!notasEstudiante) {
             const nuevaNota = new NotasScheme({
+                codigo_nota,
                 codigo_estudiante,
                 codigo_curso,
                 nota,
